@@ -176,11 +176,11 @@ public class Stats_calculator extends JFrame
          new ActionListener() // anonymous inner class
          {
             // event handler called when combinationButton is clicked
-            public void actionPerformed( ActionEvent event )
+            public void actionPerformed( ActionEvent event3 )
             {
                //combinationButtonActionPerformed( event );
                 
-                event e = new event();
+                combiEvent e = new combiEvent();
                 combinationButton.addActionListener(e);
             }
 
@@ -197,9 +197,12 @@ public class Stats_calculator extends JFrame
          new ActionListener() // anonymous inner class
          {
             // event handler called when meanButton is clicked
-            public void actionPerformed( ActionEvent event )
+            public void actionPerformed( ActionEvent event4 )
             {
-               permutationButtonActionPerformed( event );
+               //permutationButtonActionPerformed( event );
+               
+                permEvent ev = new permEvent();
+                permutationButton.addActionListener(ev);
             }
 
          } // end anonymous inner class
@@ -367,7 +370,7 @@ public class Stats_calculator extends JFrame
        }
    
    
-  public void combinationButtonActionPerformed(ActionEvent event)
+  public void combinationButtonActionPerformed(ActionEvent event3)
   {
       
       
@@ -381,7 +384,7 @@ public class Stats_calculator extends JFrame
        }
   }
   
-  public void permutationButtonActionPerformed(ActionEvent event)
+  public void permutationButtonActionPerformed(ActionEvent event4)
   {
       if (SampOrPop_ButtonState = false)
        {
@@ -508,24 +511,25 @@ public class Stats_calculator extends JFrame
        }
        return mean;
   }
-  
-      public static int factorial(JTextField input)
+  //TODO: Fix Factorial function!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      public static long factorial(JTextField input)
       {
-      int input_int = Integer.parseInt(input.getText());
-      int c = input_int--;
-      int factorial = 0;
-      if(input_int >= 1)
-      {
-          factorial = input_int * c;
-      }
-      else
-      {
-          throw new NumberFormatException("Please enter a value above zero");
-      }
-      return factorial;
+          int input_int= Integer.parseInt(input.getText());
+          int input_after = input_int - 1;
+          long factorial = (long)(input_int * input_after);
+          if(input_int== 0)
+          {
+              throw new NumberFormatException("Please enter a value above zero");
+          }
+          for( int x = input_after; x > 1; x--)
+          {
+              input_after = input_after - 1;
+              factorial = factorial * input_after;
+          }
+          return factorial;
       }
 
-  public class event implements ActionListener{
+  public class combiEvent implements ActionListener{
       public void actionPerformed(ActionEvent e){
         combinationWindow gui = new combinationWindow(Stats_calculator.this);
         gui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -535,6 +539,17 @@ public class Stats_calculator extends JFrame
       }
   }
   
+    public class permEvent implements ActionListener{
+      public void actionPerformed(ActionEvent ev){
+        PermutationWindow gui = new PermutationWindow(Stats_calculator.this);
+        gui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        gui.setTitle("Permutation Calculator");
+        //gui.setVisible(true);
+        
+      }
+  }
+  
+
     public static void main( String args[] ) 
    {
       Stats_calculator application = new Stats_calculator();
