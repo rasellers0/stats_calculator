@@ -2,18 +2,17 @@ package stats_calculator;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import static stats_calculator.PermutationWindow.factorial;
 
 /**
  *
  * @author rasellers0
  */
-public class combinationWindow extends JDialog {
+public class PermutationWindow extends JDialog {
     JTextField Possibilities;
     JTextField Selection;
     
-    public combinationWindow(JFrame frame){
-        super(frame, "Combination Calculator", true);
+    public PermutationWindow(JFrame frame){
+        super(frame, "Permutation Calculator", true);
         setLayout(new FlowLayout());
         createUserInterface();
         
@@ -82,7 +81,7 @@ public class combinationWindow extends JDialog {
             }
                );
        
-       setTitle( "Combination Calculator" ); // set title bar string
+       setTitle( "Permutation Calculator" ); // set title bar string
        setSize( 350, 180 );          // set window size
        setVisible( true );           // display window
     
@@ -95,22 +94,22 @@ public class combinationWindow extends JDialog {
 
   public void calculateButtonActionPerformed(ActionEvent eventb) 
   {
-      //formula for combination is n(total number of items) factorial
-      //over ( r(number of items to be selected) factorial times (n-r) factorial
-      //so for example, if you were asked to find how many groups of 4 can be chosen
-      //from fifteen, it would go 15!/4(15-4)!
+      //formula for combination is n(total number of items) factorial divided by
+      //the sum of n minus k(number of selections) factorial: n!/(n-k)!
+      //for example, the total number of permutations of ten items taken three
+      //at a time is 720
       try{
-          //int n = Integer.parseInt(Selection.getText());
-          //int r = Integer.parseInt(Possibilities.getText());
-      //shit's still fucked. I think i'm misunderstanding the variables and stuff
-          long n_fac = Stats_calculator.factorial(Possibilities);
-          long r_fac = Stats_calculator.factorial(Selection);
-          long n_minus_r = PermutationWindow.factorial(Possibilities, Selection);
+      int k = Integer.parseInt(Selection.getText());
+      int n = Integer.parseInt(Possibilities.getText());
       
-          long combination = n_fac / (r_fac * n_minus_r);
+      long n_fac = Stats_calculator.factorial(Selection);
+      long k_fac = Stats_calculator.factorial(Possibilities);
+      long n_minus_k = factorial(Possibilities, Selection);
       
-          Stats_calculator.results.setText(String.valueOf(combination));
-          dispose();
+      long permutation = k_fac /n_minus_k;
+      String perm_string = String.valueOf(permutation);
+      Stats_calculator.results.setText(perm_string);
+      dispose();
       }
       catch(Exception ex)
       {
@@ -118,4 +117,27 @@ public class combinationWindow extends JDialog {
          dispose();
       }
   }
+  
+  public static long factorial(JTextField input1, JTextField input2)
+  {
+      int input1_int = Integer.parseInt(input1.getText());
+      int input2_int = Integer.parseInt(input2.getText());
+      int input_start = (input1_int - input2_int);
+      int input_after = input_start - 1;
+      long factorial = input_start * input_after;
+      
+      if(input1_int == 0 || input2_int == 0)
+      {
+          throw new NumberFormatException("Please enter a value above zero");
+      }
+      
+      for( int x = input_after; x > 1; x--)
+      {
+          input_after = input_after - 1;
+          factorial = factorial * input_after;
+      }
+      return factorial;
+      }
+
+  
 }
