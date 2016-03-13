@@ -175,14 +175,11 @@ public class Stats_calculator extends JFrame
 
          new ActionListener() // anonymous inner class
          {
-            // event handler called when combinationButton is clicked
-            public void actionPerformed( ActionEvent event3 )
-            {
-               //combinationButtonActionPerformed( event );
-                
-                combiEvent e = new combiEvent();
-                combinationButton.addActionListener(e);
-            }
+         public void actionPerformed(ActionEvent e){
+            combinationWindow gui = new combinationWindow(Stats_calculator.this);
+            gui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            gui.setTitle("Combination Calculator");
+         }
 
          } // end anonymous inner class
 
@@ -196,14 +193,11 @@ public class Stats_calculator extends JFrame
 
          new ActionListener() // anonymous inner class
          {
-            // event handler called when meanButton is clicked
-            public void actionPerformed( ActionEvent event4 )
-            {
-               //permutationButtonActionPerformed( event );
-               
-                permEvent ev = new permEvent();
-                permutationButton.addActionListener(ev);
-            }
+         public void actionPerformed(ActionEvent ev){
+            PermutationWindow gui = new PermutationWindow(Stats_calculator.this);
+            gui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            gui.setTitle("Permutation Calculator");
+      }
 
          } // end anonymous inner class
 
@@ -528,27 +522,6 @@ public class Stats_calculator extends JFrame
           }
           return factorial;
       }
-
-  public class combiEvent implements ActionListener{
-      public void actionPerformed(ActionEvent e){
-        combinationWindow gui = new combinationWindow(Stats_calculator.this);
-        gui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        gui.setTitle("Combination Calculator");
-        //gui.setVisible(true);
-        
-      }
-  }
-  
-    public class permEvent implements ActionListener{
-      public void actionPerformed(ActionEvent ev){
-        PermutationWindow gui = new PermutationWindow(Stats_calculator.this);
-        gui.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        gui.setTitle("Permutation Calculator");
-        //gui.setVisible(true);
-        
-      }
-  }
-  
 
     public static void main( String args[] ) 
    {
